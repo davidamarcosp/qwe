@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import * as React from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
@@ -11,6 +11,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "@/components/ui/command"
 import {
   Popover,
@@ -100,8 +101,6 @@ export default function WorksetCreator() {
     ))
   }
 
-  if (exercises === undefined) alert("No exercises found")
-
   return (
     <div className="space-y-4 w-full px-4 sm:px-6 md:max-w-2xl md:mx-auto">
       <Card className="w-full">
@@ -126,28 +125,30 @@ export default function WorksetCreator() {
               </PopoverTrigger>
               <PopoverContent className="w-full p-0">
                 <Command>
-                  <CommandInput placeholder="Search exercise..." />
-                  <CommandEmpty>No exercise found.</CommandEmpty>
-                  <CommandGroup>
-                    {exercises.map((exercise) => (
-                      <CommandItem
-                        key={exercise.value}
-                        value={exercise.value}
-                        onSelect={(currentValue) => {
-                          setValue(currentValue === value ? "" : currentValue)
-                          setOpen(false)
-                        }}
-                      >
-                        <Check
-                          className={cn(
-                            "mr-2 h-4 w-4",
-                            value === exercise.value ? "opacity-100" : "opacity-0"
-                          )}
-                        />
-                        {exercise.label}
-                      </CommandItem>
-                    ))}
-                  </CommandGroup>
+                  <CommandInput placeholder="Type a command or search..." />
+                  <CommandList>
+                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandGroup>
+                      {exercises.map((exercise) => (
+                        <CommandItem
+                          key={exercise.value}
+                          value={exercise.value}
+                          onSelect={(currentValue) => {
+                            setValue(currentValue === value ? "" : currentValue)
+                            setOpen(false)
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              value === exercise.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {exercise.label}
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
                 </Command>
               </PopoverContent>
             </Popover>
